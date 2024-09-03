@@ -1,4 +1,5 @@
 
+import { IoIosSearch } from "react-icons/io";
 import { useEffect, useState } from 'react'
 import { AddFriendIcon } from '../../Svg/AddFriend'
 import { getDatabase, onValue, push, ref, remove, set } from 'firebase/database'
@@ -14,9 +15,11 @@ const UserList = () => {
   const user = useSelector((user) => user.logIn.loginValues)
   const [friendrequsetlist, setFriendRequestList] = useState([])
   const [cancelrquest, setCancelRequest] = useState([])
-  // const [pendingrequest, setPendingRequest] = useState([])
- const [imgshow, setImgShow] = useState(false);
- const [imgval, setImgVal] = useState(user.photoURL)
+  const [pendingrequest, setPendingRequest] = useState([])
+  const [searchitems, setSearchItems] = useState("")
+  const [frindlist, setFriendList] = useState([])
+   const [imgshow, setImgShow] = useState(false);
+   const [imgval, setImgVal] = useState(user.photoURL)
   const storage = getStorage();
   const [users, setUsers] = useState([])
   const db = getDatabase()
@@ -89,19 +92,32 @@ useEffect(() =>{
   });
 },[db])
 
-// useEffect(() =>{
-//   const starCountRef = ref(db, 'FriendRequest/');
-//   onValue(starCountRef, (snapshot) => {
-//     let pendArr = []
-//    snapshot.forEach((item) =>{
-//     if(user.uid === item.val().senderId){
-//       pendArr.push({...item.val(), id: item.key})
-//     }
-//    })
-//   //  setPendingRequest(pendArr)
-//   })
+useEffect(() =>{
+  const starCountRef = ref(db, 'FriendRequest/');
+  onValue(starCountRef, (snapshot) => {
+    let pendArr = []
+   snapshot.forEach((item) =>{
+    if(user.uid === item.val().senderId){
+      pendArr.push({...item.val(), id: item.key})
+    }
+   })
+   setPendingRequest(pendArr)
+  })
   
-// },[db, user.uid])
+},[db, user.uid])
+
+useEffect(() =>{
+  const starCountRef = ref(db, 'friends/');
+  onValue(starCountRef, (snapshot) => {
+    let friendArr = []
+    snapshot.forEach((item) =>{
+      if(user.uid === item.senderId || user.uid === item.reciverId){
+        friendArr.push({...item.val(), id: item.key})
+      }
+    })
+    setFriendList(friendArr)
+  });
+},[db, user.uid])
 
  const handleCancelRequest =(itemId) =>{
   const cancelToreq = cancelrquest.find((req) => req.reciverId === itemId && req.senderId === user.uid)
@@ -109,14 +125,25 @@ useEffect(() =>{
       remove(ref(db, "FriendRequest/" + cancelToreq.id))
     }
  }
+
+ let filterUsers =  users.filter((userItem) =>{
+  if(searchitems === ""){
+    return userItem
+  }else if(userItem.username.toLocaleLowerCase().indexOf(searchitems.toLocaleLowerCase()) > -1){
+    return userItem
+  }
+})
   return (
     <>
       <div className='bg-[#FBFBFB] w-full h-[600px] px-5 overflow-y-auto'>
-      <h1 className='text-black font-robotoBold mt-5 text-xl'>All Users</h1>
-      
+      <h1 className='text-black font-robotoBold mt-5 text-xl'>All Users ({users.length})</h1>
+      <div className='mt-5 mb-5 w-full h-min relative'>
+          <input type="text" value={searchitems} onChange={(e) => setSearchItems(e.target.value)} placeholder='Search' className='w-full py-2 border border-slate-400 rounded-md outline-none px-8' />
+          <IoIosSearch className="absolute left-1 top-[10px] text-gray-400 w-6 h-6" />
+        </div>
 
     {
-      users.map((item, i) =>(
+      filterUsers.map((item, i) =>(
         <div className='mt-4 flex justify-between items-center' key={i}>
     <div className='flex items-center gap-x-2'>
       <div className=' w-10 h-10 rounded-full'>
@@ -130,14 +157,16 @@ useEffect(() =>{
     {
       friendrequsetlist.includes(item.id + user.uid) || friendrequsetlist.includes(user.uid + item.id) ? (
 <div>
-{/* {
-  pendingrequest.length ? (
+{
+  pendingrequest.length   ? (
     <button onClick={() => handleCancelRequest(item.id)} className='bg-red-500 rounded-md text-white px-4 py-2'>Cancle Request</button>
    ) : (
     <button  className='bg-gray-500 rounded-md text-white px-4 py-2'>Pending Request</button>
-   )
-} */}
-  <button onClick={() => handleCancelRequest(item.id)} className='bg-red-500 rounded-md text-white px-4 py-2'>Cancle Request</button>
+   ) 
+  
+  
+}
+ 
 </div>
       ) : (
         <div className='text-black cursor-pointer' onClick={() => handleFriendRequest(item)}>
@@ -151,6 +180,7 @@ useEffect(() =>{
       ))
     }
   
+
 
  
 {
