@@ -1,7 +1,7 @@
 import { getDatabase, onValue, push, ref, remove, set } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import avatar from '../../assets/avatar.jpg'
+
 import Lottie from 'lottie-react'
 
 import notFound from '../../Animations/notfound.json'
@@ -56,7 +56,7 @@ const FriendRequest = () => {
         <div className='mt-4 flex justify-between items-center' key={item.id}>
   <div className='flex items-center gap-x-2'>
     <div className=' w-10 h-10 rounded-full'>
-      <img src={item.senderProfile || avatar} alt="" className='w-full h-full rounded-full object-cover' />
+      <img src={item.senderProfile || "avatar.jpg"} alt="" className='w-full h-full rounded-full object-cover' />
     </div>
     <div>
       <span className='text-black font-robotoRegular'>{item.senderName}</span>

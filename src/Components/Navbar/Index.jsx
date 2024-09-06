@@ -6,7 +6,7 @@ import { CameraIcon } from '../../Svg/Camera'
 import { createPortal } from 'react-dom'
 import Modals from '../Modals/Index'
 import { useDispatch, useSelector } from 'react-redux'
-import avatar from '../../assets/avatar.jpg'
+
 import { logoutUsers } from '../../feauters/Slices/UserSlice'
 
 const Navbar = () => {
@@ -31,7 +31,7 @@ const Navbar = () => {
     <div className='relative'>
 
     <div className=' rounded-full w-14 h-14'>
-      <img src={user.photoURL || avatar} alt="" className='w-full h-full rounded-full object-cover overflow-hidden' />
+      <img src={user.photoURL || "avatar.jpg"} alt="" className='w-full h-full rounded-full object-cover overflow-hidden' />
     </div>
     <div onClick={() => setShow(true)} className='bg-white bottom-0 right-0 rounded-full w-5 h-5 absolute flex justify-center items-center cursor-pointer'>
      <CameraIcon/>

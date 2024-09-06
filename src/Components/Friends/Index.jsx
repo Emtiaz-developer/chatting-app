@@ -2,7 +2,7 @@ import { getDatabase, onValue, ref } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { json, useLocation, useNavigate } from 'react-router-dom'
-import avatar from '../../assets/avatar.jpg'
+
 import { activeSingle } from '../../feauters/Slices/ActiveSingleSlice'
 
 const Friends = () => {
@@ -68,7 +68,7 @@ const Friends = () => {
         <div className='flex items-center justify-between  mt-3 hover:bg-[#efefef] px-4 py-2 rounded-md transition-all ease-linear duration-100 cursor-pointer' key={item.id} onClick={() => handleSingleChat(item)}>
     <div className='flex items-center gap-x-2'>
         <div className='w-12 h-12 rounded-full overflow-hidden'>
-       {user.uid === item.reciverId ?         <img  src={item.senderProfile || avatar} alt="" className='w-full h-full rounded-full object-cover overflow-hidden cursor-pointer' /> :    <img  src={item.reciverProfile || avatar} alt="" className='w-full h-full rounded-full object-cover overflow-hidden cursor-pointer' />}
+       {user.uid === item.reciverId ?         <img  src={item.senderProfile || "avatar.jpg"} alt="" className='w-full h-full rounded-full object-cover overflow-hidden cursor-pointer' /> :    <img  src={item.reciverProfile || "avatar.jpg"} alt="" className='w-full h-full rounded-full object-cover overflow-hidden cursor-pointer' />}
         </div>
         <h3 className='font-robotoRegular text-black text-lg'>
         {user.uid === item.senderId ? item.reciverName : item.senderName}

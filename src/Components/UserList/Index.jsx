@@ -6,7 +6,7 @@ import { getDatabase, onValue, push, ref, remove, set } from 'firebase/database'
 import { useSelector } from 'react-redux'
 import { getDownloadURL, getStorage, ref as Ref } from 'firebase/storage'
 
-import avatar from '../../assets/avatar.jpg'
+
 import { createPortal } from 'react-dom'
 import { CrossIcon } from '../../Svg/Cross'
 
@@ -71,10 +71,10 @@ const handleFriendRequest =(data) =>{
   set(push(ref(db, "FriendRequest")),{
     senderId : user.uid,
     senderName: user.displayName,
-    senderProfile : user.photoURL ?? "/src/assets/avatar.jpg",
+    senderProfile : user.photoURL ?? "avatar.jpg",
     reciverId : data.id,
     reciverName : data.username,
-    reciverProfile: data.photoURL ?? "/src/assets/avatar.jpg"
+    reciverProfile: data.photoURL ?? "avatar.jpg"
   })
 }
 
@@ -147,7 +147,7 @@ useEffect(() =>{
         <div className='mt-4 flex justify-between items-center' key={i}>
     <div className='flex items-center gap-x-2'>
       <div className=' w-10 h-10 rounded-full'>
-        <img onClick={() => handlePhote(item)} src={item.photoURL || avatar} alt="" className='w-full h-full rounded-full object-cover overflow-hidden cursor-pointer' />
+        <img onClick={() => handlePhote(item)} src={item.photoURL || "avatar.jpg"} alt="" className='w-full h-full rounded-full object-cover overflow-hidden cursor-pointer' />
       </div>
       <div>
         <span className='text-black font-robotoRegular'>{item.username}</span>
