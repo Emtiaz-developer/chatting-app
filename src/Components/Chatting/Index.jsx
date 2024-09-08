@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 import { getDatabase, onValue, push, ref, set } from "firebase/database";
 
 import EmojiPicker from "emoji-picker-react";
-import moment from "moment";
+
 import { getDownloadURL, getStorage, ref as Ref, uploadBytesResumable } from "firebase/storage";
 
 const Chatting = () => {
@@ -131,7 +131,7 @@ const handleSendMessage = (e) =>{
           <img src={item.img} alt="" className='w-full h-full object-cover rounded-md' />
            </div>  : <>
            <p className='text-white font-robotoRegular text-sm bg-[#0084FF] rounded-md py-2 inline-block px-4'> {item.message} </p>
-        <span className="mt-2 text-sm text-slate-400 mb-2">{moment().format('MMMM Do YYYY, h:mm:ss a')} </span>
+        <span className="mt-2 text-sm text-slate-400 mb-2"> </span>
            </>
         }
          </div>
@@ -141,7 +141,7 @@ const handleSendMessage = (e) =>{
           <img src={item.img} alt="" className='w-full h-full object-cover rounded-md' />
            </div> : <>
            <p className='text-black font-robotoRegular text-sm bg-[#F0F0F0] rounded-md py-2 inline-block px-4'>  {item.message}</p>
-           <span className="mt-2 text-sm text-slate-400 mb-2">{moment().format('MMMM Do YYYY, h:mm:ss a')}</span>
+           <span className="mt-2 text-sm text-slate-400 mb-2"></span>
            </>
         }
          </div>
