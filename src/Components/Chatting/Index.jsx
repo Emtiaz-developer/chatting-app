@@ -35,7 +35,7 @@ const Chatting = () => {
   })
  }
 
-
+// useEffect
  useEffect(() =>{
   onValue(ref(db, "SingleMessages"), (snapshot) =>{
     let messageArr = []
@@ -100,6 +100,7 @@ const handleSendMessage = (e) =>{
     handleMessages()
   }
 }
+console.log(singleFriend)
 
   return (
     <>
